@@ -34,7 +34,7 @@ i2c-dev
 Then you can run the owserver with something like:
 
 ```
-docker run -d --privileged -v /dev/i2c-1:/dev/i2c-1 -v `pwd`/owfs-i2c.conf:/etc/owfs.conf -p 4304:4304 dhiltgen/rpi-1-wire
+docker run -d --restart="always" --privileged -v /dev/i2c-1:/dev/i2c-1 -v `pwd`/owfs-i2c.conf:/etc/owfs.conf -p 4304:4304 dhiltgen/rpi-1-wire
 ```
 
 USB Master
@@ -55,5 +55,5 @@ blacklist ds2490
 Then you can run the owserver with something like:
 
 ```
-docker run -d --privileged -v /dev/bus/usb:/dev/bus/usb -v `pwd`/owfs-usb.conf:/etc/owfs.conf -p 4304:4304 dhiltgen/rpi-1-wire
+docker run -d --restart="always" --privileged -v /dev/bus/usb:/dev/bus/usb -v `pwd`/owfs-usb.conf:/etc/owfs.conf -p 4304:4304 dhiltgen/rpi-1-wire
 ```

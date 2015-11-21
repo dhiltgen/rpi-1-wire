@@ -1,4 +1,4 @@
-1-Wire Server for Raspberry PI
+1-Wire Client and Server for Raspberry PI
 ==============================
 
 * [Git](https://github.com/dhiltgen/rpi-1-wire)
@@ -27,7 +27,7 @@ and assuming you're using the hypriot image, you'll have to add the
 following two entries to your */etc/modules* and reboot:
 
 ```
-i2c-bcm2708 
+i2c-bcm2708
 i2c-dev
 ```
 
@@ -57,3 +57,28 @@ Then you can run the owserver with something like:
 ```
 docker run -d --restart="always" --privileged -v /dev/bus/usb:/dev/bus/usb -v `pwd`/owfs-usb.conf:/etc/owfs.conf -p 4304:4304 dhiltgen/rpi-1-wire
 ```
+
+Building
+--------
+
+```bash
+(cd server; docker build -t dhiltgen/rpi-1-wire-server:latest . )
+(cd client; docker build -t dhiltgen/rpi-1-wire-client:latest . )
+```
+
+Running
+-------
+* Server: see above
+* Client:
+    ```bash
+docker run --rm -it \
+    --link owserver:owserver \
+    dhiltgen/rpi-1-wire-client \
+    owdir -s owserver
+
+docker run --rm -it \
+    --link owserver:owserver \
+    dhiltgen/rpi-1-wire-client \
+    owread -s owserver /26.C29821010000/temperature
+```
+
